@@ -2,7 +2,8 @@ package cn.lxtkj.gulimall.product;
 
 import cn.lxtkj.gulimall.product.entity.BrandEntity;
 import cn.lxtkj.gulimall.product.service.BrandService;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
