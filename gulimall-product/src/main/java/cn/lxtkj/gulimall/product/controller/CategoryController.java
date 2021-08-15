@@ -1,6 +1,7 @@
 package cn.lxtkj.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,15 @@ import cn.lxtkj.common.utils.R;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
+    /**
+     * 查出所有分类及子分类，以树形结构组装起来
+     */
+    @RequestMapping("/list/tree")
+    public R list(){
+        List<CategoryEntity> entitylist = categoryService.listWithTree();
+        return R.ok().put("data", entitylist);
+    }
 
     /**
      * 列表
