@@ -3,6 +3,12 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    alicloud:
+      access-key: LTAI5tFnRMJQVvfsyXaurNmo
+      secret-key: eKtByXS0L6lWiXrqLCzSbLfzgTBJlD
+      oss:
+        endpoint: oss-cn-shenzhen.aliyuncs.com
+        bucket: lxtkj
   application:
     name: gulimall-third-party
 server:
