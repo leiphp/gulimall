@@ -3,12 +3,9 @@ package cn.lxtkj.gulimall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import cn.lxtkj.gulimall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cn.lxtkj.gulimall.product.entity.AttrEntity;
 import cn.lxtkj.gulimall.product.service.AttrService;
@@ -29,6 +26,17 @@ import cn.lxtkj.common.utils.R;
 public class AttrController {
     @Autowired
     private AttrService attrService;
+
+    /**
+     * 列表
+     */
+    @GetMapping("/base/list/{catelogId}")
+    public R baseAttrList(@RequestParam Map<String, Object> params,
+                          @PathVariable("catelogId") Long catelogId){
+        PageUtils page = attrService.queryBaseAttrPage(params,catelogId);
+
+        return R.ok().put("page", page);
+    }
 
     /**
      * 列表
@@ -55,8 +63,8 @@ public class AttrController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public R save(@RequestBody AttrVo attr){
+		attrService.saveAttr(attr);
 
         return R.ok();
     }
