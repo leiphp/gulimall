@@ -1,8 +1,11 @@
 package cn.lxtkj.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import cn.lxtkj.gulimall.product.entity.ProductAttrValueEntity;
+import cn.lxtkj.gulimall.product.service.ProductAttrValueService;
 import cn.lxtkj.gulimall.product.vo.AttrGroupRelationVo;
 import cn.lxtkj.gulimall.product.vo.AttrRespVo;
 import cn.lxtkj.gulimall.product.vo.AttrVo;
@@ -29,8 +32,20 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
+    @Autowired
+    private ProductAttrValueService productAttrValueService;
+
+    /** 功能：根据spuId信息查询出对应的规格参数信息
+       API：https://easydoc.xyz/doc/75716633/ZUqEdvA4/GhhJhkg7
+     */
+    @GetMapping("/base/listforspu/{spuId}")
+    public R listForSpu(@PathVariable("spuId") Long spuId){
+        List<ProductAttrValueEntity> entityList=productAttrValueService.baseAttrListForSpu(spuId);
+        return  R.ok().put("data",entityList);
+    };
+
     /**
-     * 列表
+     * 获取分类规格参数或获取分类销售属性
      */
     @GetMapping("/{attrType}/list/{catelogId}")
     public R baseAttrList(@RequestParam Map<String, Object> params,
@@ -79,6 +94,19 @@ public class AttrController {
     public R update(@RequestBody AttrVo attr){
 		attrService.updateAttr(attr);
 
+        return R.ok();
+    }
+
+    /**
+     * 功能：修改商品规格
+     * API：https://easydoc.xyz/doc/75716633/ZUqEdvA4/GhnJ0L85
+     * @param spuId
+     * @param entities
+     * @return
+     */
+    @PostMapping("/update/{spuId}")
+    public R update(@PathVariable("spuId") Long spuId,@RequestBody List<ProductAttrValueEntity> entities){
+        productAttrValueService.updateSpuAttr(spuId,entities);
         return R.ok();
     }
 
