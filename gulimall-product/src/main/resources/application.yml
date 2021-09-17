@@ -1,9 +1,12 @@
 spring:
-  datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://192.168.1.107:3306/gulimall_pms
-    driver-class-name: com.mysql.jdbc.Driver
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
+#  datasource:
+#    username: root
+#    password: 123456
+#    url: jdbc:mysql://192.168.1.107:3306/gulimall_pms
+#    driver-class-name: com.mysql.jdbc.Driver
   cloud:
     nacos:
       discovery:
@@ -12,6 +15,9 @@ spring:
     name: gulimall-product
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
