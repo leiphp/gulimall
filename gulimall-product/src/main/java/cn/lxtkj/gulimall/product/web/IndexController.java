@@ -69,46 +69,46 @@ public class IndexController {
         }
         return "hello";
     }
-//
-//    @GetMapping("/write")
-//    @ResponseBody
-//    public String writeValue(){
-//        RReadWriteLock writeLock=redisson.getReadWriteLock("rw-loc");
-//        String uuid = null;
-//        RLock lock = writeLock.writeLock();
-//        lock.lock();
-//        try {
-//            log.info("写锁加锁成功");
-//            uuid = UUID.randomUUID().toString();
-//            redisTemplate.opsForValue().set("writeValue",uuid);
-//            Thread.sleep(30000);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//            lock.unlock();
-//            log.info("写锁释放");
-//
-//        }
-//        return uuid;
-//    }
-//
-//    @GetMapping("/read")
-//    @ResponseBody
-//    public String redValue(){
-//        String uuid = null;
-//        RReadWriteLock readLock=redisson.getReadWriteLock("rw-loc");
-//        RLock lock = readLock.readLock();
-//        lock.lock();
-//        try {
-//            log.info("读锁加锁成功");
-//             uuid = redisTemplate.opsForValue().get("writeValue");
-//            Thread.sleep(30000);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//            lock.unlock();
-//            log.info("读锁释放");
-//        }
-//        return uuid;
-//    }
+
+    @GetMapping("/write")
+    @ResponseBody
+    public String writeValue(){
+        RReadWriteLock writeLock=redisson.getReadWriteLock("rw-loc");
+        String uuid = null;
+        RLock lock = writeLock.writeLock();
+        lock.lock();
+        try {
+            log.info("写锁加锁成功");
+            uuid = UUID.randomUUID().toString();
+            redisTemplate.opsForValue().set("writeValue",uuid);
+            Thread.sleep(30000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
+            log.info("写锁释放");
+
+        }
+        return uuid;
+    }
+
+    @GetMapping("/read")
+    @ResponseBody
+    public String redValue(){
+        String uuid = null;
+        RReadWriteLock readLock=redisson.getReadWriteLock("rw-loc");
+        RLock lock = readLock.readLock();
+        lock.lock();
+        try {
+            log.info("读锁加锁成功");
+             uuid = redisTemplate.opsForValue().get("writeValue");
+            Thread.sleep(30000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
+            log.info("读锁释放");
+        }
+        return uuid;
+    }
 }

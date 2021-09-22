@@ -6,6 +6,8 @@ import cn.lxtkj.gulimall.product.vo.Catelog2Vo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -36,6 +38,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private RedissonClient redisson;
 
     @Autowired
     CategoryBrandRelationService categoryBrandRelationService;
@@ -103,7 +108,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         if(StringUtils.isEmpty(catalogJSON)){
             System.out.println("缓存不命中，查询数据库");
             //2.缓存中没有，查询数据库
-            Map<String,List<Catelog2Vo>> catalogJsonFromDb = getCatelogJsonFromDbWithRedisRock();
+            Map<String,List<Catelog2Vo>> catalogJsonFromDb = getCatelogJsonFromDbWithRedisLock();
             return catalogJsonFromDb;
         }
         System.out.println("缓存命中，直接返回");
@@ -112,7 +117,22 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return result;
     }
 
-    public Map<String, List<Catelog2Vo>> getCatelogJsonFromDbWithRedisRock() {
+    public Map<String, List<Catelog2Vo>> getCatelogJsonFromDbWithRedissonLock() {
+        //1.锁的名字，锁的粒度，越细越好
+        RLock lock = redisson.getLock("CatelogJson-lock");
+        //该方法会阻塞其他线程向下执行，只有释放锁之后才会接着向下执行
+        lock.lock();
+        Map<String, List<Catelog2Vo>> dataFromDb;
+        try {
+            //从数据库中查询分类数据
+            dataFromDb = getDataFromDb();
+        } finally {
+            lock.unlock();
+        }
+        return dataFromDb;
+    }
+
+    public Map<String, List<Catelog2Vo>> getCatelogJsonFromDbWithRedisLock() {
         String uuid= UUID.randomUUID().toString();
         //1.占分布式锁，去redis占坑
         Boolean lock = redisTemplate.opsForValue().setIfAbsent("lock",uuid, 300, TimeUnit.SECONDS);
@@ -137,7 +157,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             } catch (Exception e) {
 
             }
-            return getCatelogJsonFromDbWithRedisRock();//自旋的方式
+            return getCatelogJsonFromDbWithRedisLock();//自旋的方式
         }
     }
 
@@ -190,7 +210,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     //使用本地锁
-    public Map<String, List<Catelog2Vo>> getCatelogJsonFromDbWithLocalRock() {
+    public Map<String, List<Catelog2Vo>> getCatelogJsonFromDbWithLocalLock() {
         log.info("查询数据库");
         //todo 本地锁不适合分布式应用，还需要分布式锁
         synchronized (this){
