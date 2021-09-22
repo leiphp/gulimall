@@ -3,14 +3,18 @@ package cn.lxtkj.gulimall.product.service.impl;
 import cn.lxtkj.gulimall.product.service.CategoryBrandRelationService;
 import cn.lxtkj.gulimall.product.vo.Catalog3List;
 import cn.lxtkj.gulimall.product.vo.Catelog2Vo;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -23,6 +27,7 @@ import cn.lxtkj.gulimall.product.dao.CategoryDao;
 import cn.lxtkj.gulimall.product.entity.CategoryEntity;
 import cn.lxtkj.gulimall.product.service.CategoryService;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 @Slf4j
 @Service("categoryService")
@@ -30,6 +35,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
 //    @Autowired
 //    CategoryDao categoryDao;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Autowired
     CategoryBrandRelationService categoryBrandRelationService;
@@ -92,6 +100,22 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Override
     public Map<String, List<Catelog2Vo>> getCatelogJson() {
+        //1.加入缓存逻辑，缓存数据时json字符串
+        String catalogJSON = redisTemplate.opsForValue().get("catalogJSON");
+        if(StringUtils.isEmpty(catalogJSON)){
+            //2.缓存中没有，查询数据库
+            Map<String,List<Catelog2Vo>> catalogJsonFromDb = getCatelogJsonFromDb();
+            //3.将查到数据再放入缓存，将对象转为json放在缓存中
+            String s = JSON.toJSONString(catalogJsonFromDb);
+            redisTemplate.opsForValue().set("catalogJSON",s,1, TimeUnit.DAYS);
+            return catalogJsonFromDb;
+        }
+        //转为对象
+        Map<String,List<Catelog2Vo>> result = JSON.parseObject(catalogJSON,new TypeReference<Map<String, List<Catelog2Vo>>>(){});
+        return result;
+    }
+
+    public Map<String, List<Catelog2Vo>> getCatelogJsonFromDb() {
         log.info("查询数据库");
         //一次性查询出所有的分类数据，减少对于数据库的访问次数，后面的数据操作并不是到数据库中查询，而是直接从这个集合中获取，
         // 由于分类信息的数据量并不大，所以这种方式是可行的
