@@ -4,3 +4,6 @@ spring:
     password: 123456
     url: jdbc:mysql://10.250.211.87:3307/gulimall_pms
     driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 10.250.200.218
+    port: 6379
