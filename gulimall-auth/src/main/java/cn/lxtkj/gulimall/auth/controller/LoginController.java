@@ -15,10 +15,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-    @GetMapping(value = "/login.html")
-    public String loginPage() {
-        return "login";
-    }
+//    @GetMapping(value = "/login.html")
+//    public String loginPage() {
+//        return "login";
+//    }
+
+
 //
 //    @GetMapping(value = "/login.html")
 //    public String loginPage(HttpSession session) {
@@ -32,6 +34,11 @@ public class LoginController {
 //            return "redirect:http://gulimall.com";
 //        }
 //
+//    }
+
+//    @GetMapping(value = "/reg.html")
+//    public String regPage() {
+//        return "reg";
 //    }
 
 }
