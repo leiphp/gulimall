@@ -1,5 +1,6 @@
 package cn.lxtkj.gulimall.thirdparty;
 
+import cn.lxtkj.gulimall.thirdparty.component.SmsComponent;
 import com.aliyun.oss.OSSClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,15 @@ import java.io.InputStream;
 public class GulimallThirdPartyApplicationTests {
 
     @Resource
+    private SmsComponent smsComponent;
+
+    @Resource
     OSSClient ossClient;
+
+    @Test
+    public void sendSmsCode() {
+        smsComponent.sendCode("13798261517", "8888");
+    }
 
     @Test
     public void testUpload() throws FileNotFoundException {

@@ -9,6 +9,12 @@ spring:
       oss:
         endpoint: oss-cn-shenzhen.aliyuncs.com
         bucket: lxtkj
+      sms:
+        host: https://dfsns.market.alicloudapi.com
+        path: /data/send_sms
+        method: POST
+        appcode: 0f23453297fc4bb592a84bf14bf8de3c
+
   application:
     name: gulimall-third-party
 server:
