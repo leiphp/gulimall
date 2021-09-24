@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: gulimall-auth
+  thymeleaf:
+    prefix:
+      classpath: /templates   # 访问template下的html文件需要配置模板，映射
+    cache: false # 开发时关闭缓存,不然没法看到实时页面
+server:
+  port: 8130
+
