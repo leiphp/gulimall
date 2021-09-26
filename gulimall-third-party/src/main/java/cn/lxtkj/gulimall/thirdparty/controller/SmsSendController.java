@@ -2,10 +2,10 @@ package cn.lxtkj.gulimall.thirdparty.controller;
 
 import cn.lxtkj.common.utils.R;
 import cn.lxtkj.gulimall.thirdparty.component.SmsComponent;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @createTime: 2021/9/24 19:45
  **/
 
-@Controller
+@RestController
 @RequestMapping(value = "/sms")
 public class SmsSendController {
 
