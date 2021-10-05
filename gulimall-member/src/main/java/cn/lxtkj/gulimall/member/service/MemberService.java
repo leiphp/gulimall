@@ -2,6 +2,7 @@ package cn.lxtkj.gulimall.member.service;
 
 import cn.lxtkj.gulimall.member.exception.PhoneException;
 import cn.lxtkj.gulimall.member.exception.UsernameException;
+import cn.lxtkj.gulimall.member.vo.MemberUserLoginVo;
 import cn.lxtkj.gulimall.member.vo.MemberUserRegisterVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lxtkj.common.utils.PageUtils;
@@ -39,5 +40,8 @@ public interface MemberService extends IService<MemberEntity> {
      * @return
      */
     void checkUserNameUnique(String userName) throws UsernameException;
+
+    MemberEntity login(MemberUserLoginVo vo);
+
 }
 
