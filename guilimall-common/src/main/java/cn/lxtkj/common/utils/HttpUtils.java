@@ -32,9 +32,9 @@ import java.util.Map;
 
 /**
  * @Description:
- * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-06-27 09:33
+ * @Created: By IntelliJ IDEA.
+ * @author: 雷小天
+ * @createTime: 2021/9/24 14:52
  **/
 public class HttpUtils {
 
