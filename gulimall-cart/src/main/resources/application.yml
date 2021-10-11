@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: gulimall-cart
+  thymeleaf:
+    prefix:
+      classpath: /templates   # 访问template下的html文件需要配置模板，映射
+    cache: false # 开发时关闭缓存,不然没法看到实时页面
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  session:
+    store-type: redis
+server:
+  port: 8140
+
+  servlet:
+    session:
+      timeout: 30m
+
+
+logging:
+  level:
+    cn.lxtkj.gulimall.auth.feign.ThirdPartFeignService: debug
