@@ -1,5 +1,6 @@
 package cn.lxtkj.gulimall.order.service;
 
+import cn.lxtkj.common.to.mq.SeckillOrderTo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lxtkj.common.utils.PageUtils;
 import cn.lxtkj.gulimall.order.entity.OrderEntity;
@@ -16,5 +17,11 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 创建秒杀单
+     * @param orderTo
+     */
+    void createSeckillOrder(SeckillOrderTo orderTo);
 }
 
