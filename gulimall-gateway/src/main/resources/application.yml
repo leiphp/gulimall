@@ -3,6 +3,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8833
+        port: 8719
     gateway:
       routes:
         - id: baidu_route
@@ -86,3 +90,10 @@ spring:
     name: gulimall-gateway
 server:
   port: 8088
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

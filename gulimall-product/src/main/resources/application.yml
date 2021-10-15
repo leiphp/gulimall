@@ -11,6 +11,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8833
+        port: 8719
   application:
     name: gulimall-product
   jackson:
@@ -30,3 +34,10 @@ server:
 logging:
   level:
     cn.lxtkj.gulimall: debug
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -3,6 +3,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8833
+        port: 8719
     alicloud:
       access-key: LTAI4tFnRMJQVvfsyXaurNmo
       secret-key: eKtByXS0L5lWiXrqLCzSbLfzgTBJlD
@@ -19,3 +23,10 @@ spring:
     name: gulimall-third-party
 server:
   port: 30000
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

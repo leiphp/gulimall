@@ -1,17 +1,21 @@
 spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8833
+        port: 8719
   application:
     name: gulimall-search
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
-  redis:
-    host: 127.0.0.1
-    port: 6379
   session:
     store-type: redis
 server:
@@ -19,3 +23,10 @@ server:
 logging:
   level:
     cn.lxtkj.gulimall: debug
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

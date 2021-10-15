@@ -1,17 +1,21 @@
 spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8833
+        port: 8719
   application:
     name: gulimall-cart
   thymeleaf:
     prefix:
       classpath: /templates   # 访问template下的html文件需要配置模板，映射
     cache: false # 开发时关闭缓存,不然没法看到实时页面
-  redis:
-    host: 127.0.0.1
-    port: 6379
   session:
     store-type: redis
 server:
@@ -21,6 +25,12 @@ server:
     session:
       timeout: 30m
 
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 logging:
   level:

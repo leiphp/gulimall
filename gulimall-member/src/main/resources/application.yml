@@ -1,13 +1,15 @@
 spring:
-  datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://10.250.211.87:3307/gulimall_ums
-    driver-class-name: com.mysql.jdbc.Driver
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8833
+        port: 8719
   application:
     name: gulimall-member
 mybatis-plus:
@@ -17,3 +19,10 @@ mybatis-plus:
       id-type: auto
 server:
   port: 8081
+
+#暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
