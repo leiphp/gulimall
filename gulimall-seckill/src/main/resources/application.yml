@@ -40,6 +40,11 @@ management:
       exposure:
         include: '*'
 
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
 logging:
   level:
     cn.lxtkj.gulimall.auth.feign.ProductFeignService: debug

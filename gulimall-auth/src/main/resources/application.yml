@@ -24,6 +24,11 @@ server:
     session:
       timeout: 30m
 
+#开启feign对sentinel的支持
+feign:
+  sentinel:
+    enabled: true
+
 #暴露所有端点
 management:
   endpoints:

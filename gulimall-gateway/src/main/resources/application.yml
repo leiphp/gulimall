@@ -6,7 +6,6 @@ spring:
     sentinel:
       transport:
         dashboard: localhost:8833
-        port: 8719
     gateway:
       routes:
         - id: baidu_route
