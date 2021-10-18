@@ -2,8 +2,8 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.1.107:3306/gulimall_wms
+    url: jdbc:mysql://10.250.211.87:3307/gulimall_wms
     driver-class-name: com.mysql.jdbc.Driver
   redis:
-    host: 127.0.0.1
+    host: 10.250.211.87
     port: 6379

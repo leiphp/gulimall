@@ -5,5 +5,5 @@ spring:
     url: jdbc:mysql://10.250.211.87:3307/gulimall_ums
     driver-class-name: com.mysql.jdbc.Driver
   redis:
-    host: 127.0.0.1
+    host: 10.250.211.87
     port: 6379
