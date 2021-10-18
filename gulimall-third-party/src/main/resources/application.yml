@@ -1,4 +1,7 @@
 spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
@@ -21,6 +24,16 @@ spring:
 
   application:
     name: gulimall-third-party
+  #服务追踪
+  zipkin:
+    discovery-client-enabled: false
+    sender:
+      type: web
+  #配置采样器
+  sleuth:
+    sampler:
+      probability: 1
+
 server:
   port: 30000
 

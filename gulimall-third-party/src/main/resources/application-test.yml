@@ -1,7 +1,4 @@
 spring:
-  redis:
-    host: 10.250.211.87
-    port: 6379
   #服务追踪
   zipkin:
     base-url: http://10.250.211.87:9411

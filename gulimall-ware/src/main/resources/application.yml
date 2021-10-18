@@ -14,6 +14,16 @@ spring:
     name: gulimall-ware
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  #服务追踪
+  zipkin:
+    discovery-client-enabled: false
+    sender:
+      type: web
+  #配置采样器
+  sleuth:
+    sampler:
+      probability: 1
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

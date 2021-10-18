@@ -12,6 +12,16 @@ spring:
         port: 8719
   application:
     name: gulimall-coupon
+  #服务追踪
+  zipkin:
+    discovery-client-enabled: false
+    sender:
+      type: web
+  #配置采样器
+  sleuth:
+    sampler:
+      probability: 1
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:

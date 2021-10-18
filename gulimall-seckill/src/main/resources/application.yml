@@ -18,6 +18,17 @@ spring:
     cache: false # 开发时关闭缓存,不然没法看到实时页面
   session:
     store-type: redis
+  #服务追踪
+  zipkin:
+    discovery-client-enabled: false
+    sender:
+      type: web
+  #配置采样器
+  sleuth:
+    sampler:
+      probability: 1
+
+
 
   #配置异步任务线程池
   task:

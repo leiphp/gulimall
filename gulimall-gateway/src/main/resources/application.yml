@@ -1,4 +1,7 @@
 spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:
@@ -87,6 +90,16 @@ spring:
 
   application:
     name: gulimall-gateway
+  #服务追踪
+  zipkin:
+    discovery-client-enabled: false
+    sender:
+      type: web
+  #配置采样器
+  sleuth:
+    sampler:
+      probability: 1
+
 server:
   port: 8088
 
